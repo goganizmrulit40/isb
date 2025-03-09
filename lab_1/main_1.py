@@ -71,5 +71,11 @@ frequency_index = {
 
 frequency = Counter(cipher_text)
 
-unique_chars = list(frequency.keys())
+total_chars = sum(frequency.values())
+frequency_index_cipher = {char: count / total_chars for char, count in frequency.items()}
 
+sorted_frequency_cipher_index = dict(sorted(frequency_index_cipher.items(), key=lambda item: item[1], reverse=True))
+
+print("Индекс частоты появления букв:")
+for char, freq in sorted_frequency_cipher_index.items():
+    print(f"Символ: '{char}', Частота: {freq:.6f}")
