@@ -36,10 +36,45 @@ frequency_index = {
     'Ъ': 0.000000
 }
 
+replacement_dict = {
+    "Z": "А",
+    "G": "Б",
+    "у": "В",
+    "3": "Г",
+    "Х": "Е",
+    "F": "З",
+    "Y": "Л",
+    "U": "М",
+    "г": "Н",
+    "%": "О",
+    "7": "П",
+    "=": "С",
+    "1": "У",
+    "R": "Ф",
+    "i": "Щ",
+    "N": "Ч",
+    "s": "Ц",
+    "J": "Ш",
+    "9": "Ъ",
+    "ю": "Ю",
+    "@": "Ы",
+    "<": "Ь"
+}
+
+def Code_to_a_single_alphabet(text):
+    for old_char, new_char in replacement_dict.items():
+        text = text.replace(old_char, new_char)
+
+    return text
+
 def main():
     with open('cod23.txt', 'r', encoding='utf-8') as file:
         text = file.read()
 
+    print(text)
+
+    text = Code_to_a_single_alphabet(text)
+    print("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
     print(text)
 
     print("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
