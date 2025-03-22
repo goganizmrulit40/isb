@@ -67,6 +67,81 @@ def Code_to_a_single_alphabet(text):
 
     return text
 
+replacement_dict_2 = {
+    "А": " ",
+    "Т": "с",
+    "Б": "о",
+    "В": "и",
+    "Г": "е",
+    "З": "а",
+    "Щ": "з",
+    "М": "п",
+    "Ф": "д",
+    "Д": "н",
+    "Я": "к",
+    "Ъ": "ц",
+    "П": "л",
+    "У": "я",
+    "Е": "т",
+    "Л": "р",
+    "О": "б",
+    "Ё": "ч",
+    "С": "ы",
+    "Н": "в",
+    "Ч": "м",
+    "Ю": "ж",
+    "И": "у",
+    "К": "щ",
+    "Ш": "х",
+    "Ц": "ь",
+    "Р": "ю",
+    "Й": "г",
+    "Ь": "э",
+    "Ж": "й",
+    "Ы": "ф"
+
+}
+
+def replace_text(text):
+    for old_char, new_char in replacement_dict_2.items():
+        text = text.replace(old_char, new_char)
+
+    return text
+
+replacement_dict_3 = {
+    "Z": " ",
+    "Т": "с",
+    "G": "о",
+    "у": "и",
+    "3": "е",
+    "F": "а",
+    "i": "з",
+    "U": "п",
+    "R": "д",
+    "Д": "н",
+    "Я": "к",
+    "9": "ц",
+    "7": "л",
+    "1": "я",
+    "Х": "т",
+    "Y": "р",
+    "%": "б",
+    "Ё": "ч",
+    "=": "ы",
+    "г": "в",
+    "N": "м",
+    "ю": "ж",
+    "И": "у",
+    "К": "щ",
+    "J": "х",
+    "s": "ь",
+    "Р": "ю",
+    "Й": "г",
+    "<": "э",
+    "Ж": "й",
+    "@": "ф"
+}
+
 def main():
     with open('cod23.txt', 'r', encoding='utf-8') as file:
         text = file.read()
@@ -89,8 +164,18 @@ def main():
     for char, freq in sorted_frequency_cipher_index.items():
         print(f"Символ: '{char}', Частота: {freq:.6f}")
 
+    print("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
+    text = replace_text(text)
+
+    print(text)
+    print("\n")
+
     with open('res.txt', 'w', encoding='utf-8') as file:
         file.write(text)
+
+    with open('replacement_dict.txt', 'w', encoding='utf-8') as f:
+        for key, value in replacement_dict_3.items():
+            f.write(f"{key}: {value}\n")
 
 if __name__ == "__main__":
     main()
