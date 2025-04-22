@@ -18,17 +18,23 @@ std::string generate_random_bits(int length) {
 }
 
 
-int main() {
-    std::string bits = generate_random_bits(128);
-    std::cout << "Random binary sequence: " << std::endl << bits << std::endl;
-
-    std::ofstream outFile("random_bits_cpp.txt");
+void write_bits_to_file(const std::string& bits, const std::string& filename) {
+    std::ofstream outFile(filename);
     if (outFile.is_open()) {
         outFile << bits;
         outFile.close();
     } else {
         std::cerr << "Error when opening a file" << std::endl;
     }
+}
+
+
+
+int main() {
+    std::string bits = generate_random_bits(128);
+    std::cout << "Random binary sequence: " << std::endl << bits << std::endl;
+
+    write_bits_to_file(bits, "random_bits_cpp.txt");
 
     return 0;
 }
