@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include <string>
+#include <fstream>
 
 
 std::string generate_random_bits(int length) {
@@ -20,5 +21,14 @@ std::string generate_random_bits(int length) {
 int main() {
     std::string bits = generate_random_bits(128);
     std::cout << "Random binary sequence: " << std::endl << bits << std::endl;
+
+    std::ofstream outFile("random_bits_cpp.txt");
+    if (outFile.is_open()) {
+        outFile << bits;
+        outFile.close();
+    } else {
+        std::cerr << "Error when opening a file" << std::endl;
+    }
+
     return 0;
 }
