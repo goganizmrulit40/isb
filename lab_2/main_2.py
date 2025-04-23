@@ -34,6 +34,21 @@ def row_walking_frequency_test(bits):
     return p_value
 
 
+# Ищем максимальную длину последовательности подряд идущих единиц в блоке
+def max_consecutive_ones(block):
+    max_length = 0
+    current_length = 0
+
+    for bit in block:
+        if bit == 1:
+            current_length += 1
+            max_length = max(max_length, current_length)
+        else:
+            current_length = 0
+
+    return max_length
+
+
 def read_bits_from_file(filename):
     try:
         with open(filename, 'r') as file:
@@ -61,7 +76,8 @@ def main():
                 print(f"Результат частотного побитового теста для {filename}: {f"Пройден: {p_value_1}" if result else 'Не пройден'}")
 
                 p_value_2 = row_walking_frequency_test(bits)
-                print(f"Результат теста на одинаковые подряд идущие биты для {filename}: {p_value_2}")
+                result = p_value_2 > 0.01
+                print(f"Результат теста на одинаковые подряд идущие биты для {filename}: {f"Пройден: {p_value_2}" if result else 'Не пройден'}")
 
 
 if __name__ == "__main__":
