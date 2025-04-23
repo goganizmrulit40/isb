@@ -1,4 +1,6 @@
 import math
+from scipy.stats import chisquare
+from scipy.special import gammainc
 
 
 # Частотный побитовый тест
@@ -72,7 +74,23 @@ def analyze_sequence(bits):
         elif max_length >= 4:
             count_4 += 1
 
+    print(f"Количество блоков с максимальной длиной ≤ 1: {count_1}")
+    print(f"Количество блоков с максимальной длиной = 2: {count_2}")
+    print(f"Количество блоков с максимальной длиной = 3: {count_3}")
+    print(f"Количество блоков с максимальной длиной ≥ 4: {count_4}")
+
     return count_1, count_2, count_3, count_4
+
+
+# Вычисление хи-квадрата
+def chi_square_test(observed_counts):
+    p = [0.2148, 0.3672, 0.2305, 0.1875]
+
+    chi2_stat = sum(((observed_counts[i] - 16 * p[i]) ** 2) / (16 * p[i]) for i in range(4))
+
+    p_value = gammainc(1.5, chi2_stat / 2)
+
+    return chi2_stat, p_value
 
 
 def read_bits_from_file(filename):
@@ -104,6 +122,15 @@ def main():
                 p_value_2 = row_walking_frequency_test(bits)
                 result = p_value_2 > 0.01
                 print(f"Результат теста на одинаковые подряд идущие биты для {filename}: {f"Пройден: {p_value_2}" if result else 'Не пройден'}")
+
+                observed_counts = analyze_sequence(bits)
+                print(f"Наблюдаемые значения: {observed_counts}")
+                chi2_stat, p_value_3 = chi_square_test(observed_counts)
+
+                print(f"Статистика хи-квадрат: {chi2_stat}")
+                result = p_value_3 > 0.01
+                print(f"Результат теста на самую длинную последовательность единиц в блоке для {filename}: {f"Пройден: {p_value_3}" if result else 'Не пройден'}")
+                print("\n")
 
 
 if __name__ == "__main__":
