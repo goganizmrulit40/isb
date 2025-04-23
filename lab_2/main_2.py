@@ -9,7 +9,7 @@ def frequency_test(bits):
 
     p_value = math.erfc(s_n / math.sqrt(2))
 
-    return p_value > 0.01
+    return p_value
 
 
 # Тест на одинаковые подряд идущие биты
@@ -27,30 +27,41 @@ def row_walking_frequency_test(bits):
         else:
             v_n += 1
 
-    numerator = abs(v_n - (2 * len(bits) * share_ones * (share_ones - 1)))
-    denominator = 2 * math.sqrt(2 * len(bits)) * share_ones * (share_ones - 1)
+    numerator = abs(v_n - (2 * len(bits) * share_ones * (1 - share_ones)))
+    denominator = 2 * math.sqrt(2 * len(bits)) * share_ones * (1 - share_ones)
     p_value = math.erfc(numerator / denominator)
 
     return p_value
+
+
+def read_bits_from_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            line = file.readline().strip() # \n
+            bits = [int(bit) for bit in line if bit in '01']
+            return bits
+    except FileNotFoundError:
+        print(f"Файл '{filename}' не найден.")
+        return None
+    except Exception as e:
+        print(f"Произошла ошибка при обработке файла '{filename}': {e}")
+        return None
 
 
 def main():
     filenames = ['random_bits_cpp.txt', 'random_bits_java.txt']
 
     for filename in filenames:
-        try:
-            with open(filename, 'r') as file:
-                line = file.readline().strip() # \n
-                bits = [int(bit) for bit in line if bit in '01']
+        bits = read_bits_from_file(filename)
 
-            result = frequency_test(bits)
+        if bits is not None:
+            if len(bits) == 128:
+                p_value_1 = frequency_test(bits)
+                result = p_value_1 > 0.01
+                print(f"Результат частотного побитового теста для {filename}: {f"Пройден: {p_value_1}" if result else 'Не пройден'}")
 
-            print(f"Результат частотного побитового теста для {filename}: {'Пройден' if result else 'Не пройден'}")
-
-        except FileNotFoundError:
-            print(f"Файл '{filename}' не найден.")
-        except Exception as e:
-            print(f"Произошла ошибка при обработке файла '{filename}': {e}")
+                p_value_2 = row_walking_frequency_test(bits)
+                print(f"Результат теста на одинаковые подряд идущие биты для {filename}: {p_value_2}")
 
 
 if __name__ == "__main__":
