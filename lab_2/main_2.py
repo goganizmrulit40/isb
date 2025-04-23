@@ -1,7 +1,7 @@
 import math
 
 
-#Проверка частоты побитового теста
+# Частотный побитовый тест
 def frequency_test(bits):
     num_ones = sum(bits)
     num_zeros = len(bits) - num_ones
@@ -10,6 +10,28 @@ def frequency_test(bits):
     p_value = math.erfc(s_n / math.sqrt(2))
 
     return p_value > 0.01
+
+
+# Тест на одинаковые подряд идущие биты
+def row_walking_frequency_test(bits):
+    num_ones = sum(bits)
+    share_ones = num_ones / len(bits)
+
+    if (abs(share_ones - 0.5) >= (2 / math.sqrt(len(bits)))):
+        return 0
+
+    v_n = 0
+    for i in range(1, len(bits)):
+        if bits[i] == bits[i - 1]:
+            v_n += 0
+        else:
+            v_n += 1
+
+    numerator = abs(v_n - (2 * len(bits) * share_ones * (share_ones - 1)))
+    denominator = 2 * math.sqrt(2 * len(bits)) * share_ones * (share_ones - 1)
+    p_value = math.erfc(numerator / denominator)
+
+    return p_value
 
 
 def main():
