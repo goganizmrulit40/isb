@@ -49,6 +49,32 @@ def max_consecutive_ones(block):
     return max_length
 
 
+# Анализируем последовательность битов и возвращаем статистику по блокам
+def analyze_sequence(bits):
+    block_size = 8
+    num_blocks = len(bits) // block_size
+
+    count_1 = 0
+    count_2 = 0
+    count_3 = 0
+    count_4 = 0
+
+    for i in range(num_blocks):
+        block = bits[i * block_size:(i + 1) * block_size]
+        max_length = max_consecutive_ones(block)
+
+        if max_length <= 1:
+            count_1 += 1
+        elif max_length == 2:
+            count_2 += 1
+        elif max_length == 3:
+            count_3 += 1
+        elif max_length >= 4:
+            count_4 += 1
+
+    return count_1, count_2, count_3, count_4
+
+
 def read_bits_from_file(filename):
     try:
         with open(filename, 'r') as file:
