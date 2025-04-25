@@ -1,6 +1,6 @@
 import math
-from scipy.stats import chisquare
 from scipy.special import gammainc
+from constants import *
 
 
 # Частотный побитовый тест
@@ -107,8 +107,21 @@ def read_bits_from_file(filename):
         return None
 
 
+def write_results_to_file(filename, p_value_1, p_value_2, p_value_3, output_filename):
+    try:
+        with open(output_filename, "a") as file:
+            file.write(f"{filename}: {p_value_1}\n")
+            file.write(f"{filename}: {p_value_2}\n")
+            file.write(f"{filename}: {p_value_3}\n\n")
+        print("Результаты успешно записаны в файл.")
+    except IOError as e:
+        print(f"Ошибка при записи в файл: {e}")
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+
+
 def main():
-    filenames = ['random_bits_cpp.txt', 'random_bits_java.txt']
+    filenames = [FILE_ENTER_1, FILE_ENTER_2]
 
     for filename in filenames:
         bits = read_bits_from_file(filename)
@@ -131,6 +144,8 @@ def main():
                 result = p_value_3 > 0.01
                 print(f"Результат теста на самую длинную последовательность единиц в блоке для {filename}: {f"Пройден: {p_value_3}" if result else 'Не пройден'}")
                 print("\n")
+
+                write_results_to_file(filename, p_value_1, p_value_2, p_value_3, FILE_EXIT)
 
 
 if __name__ == "__main__":
