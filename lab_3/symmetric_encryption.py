@@ -34,3 +34,8 @@ class SymmetricEncryption:
         cipher = Cipher(algorithms.CAST5(self.key), modes.CBC(init_vector))
         decryptor = cipher.decryptor()
 
+        padded_plaintext = decryptor.update(ciphertext) + decryptor.finalize()
+
+        pad_length = padded_plaintext[-1]
+        return padded_plaintext[:-pad_length]
+
