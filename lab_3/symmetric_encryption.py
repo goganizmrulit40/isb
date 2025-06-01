@@ -20,22 +20,22 @@ class SymmetricEncryption:
         encryptor = cipher.encryptor()
 
         pad_length = 8 - (len(inital_text) % 8)
-        padded_plaintext = inital_text + bytes([pad_length] * pad_length)
+        padded_plain_text = inital_text + bytes([pad_length] * pad_length)
 
-        ciphertext = encryptor.update(padded_plaintext) + encryptor.finalize()
-        return init_vector + ciphertext
+        cipher_text = encryptor.update(padded_plain_text) + encryptor.finalize()
+        return init_vector + cipher_text
 
 
     # дешифровка
-    def decrypt(self, init_vector_and_ciphertext):
-        init_vector = init_vector_and_ciphertext[:8]
-        ciphertext = init_vector_and_ciphertext[8:]
+    def decrypt(self, init_vector_and_cipher_text):
+        init_vector = init_vector_and_cipher_text[:8]
+        cipher_text = init_vector_and_cipher_text[8:]
 
         cipher = Cipher(algorithms.CAST5(self.key), modes.CBC(init_vector))
         decryptor = cipher.decryptor()
 
-        padded_plaintext = decryptor.update(ciphertext) + decryptor.finalize()
+        padded_plain_text = decryptor.update(cipher_text) + decryptor.finalize()
 
-        pad_length = padded_plaintext[-1]
-        return padded_plaintext[:-pad_length]
+        pad_length = padded_plain_text[-1]
+        return padded_plain_text[:-pad_length]
 
