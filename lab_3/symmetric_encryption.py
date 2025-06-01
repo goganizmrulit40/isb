@@ -26,4 +26,11 @@ class SymmetricEncryption:
         return init_vector + ciphertext
 
 
+    @staticmethod
+    def decrypt(self, init_vector_and_ciphertext):
+        init_vector = init_vector_and_ciphertext[:8]
+        ciphertext = init_vector_and_ciphertext[8:]
+
+        cipher = Cipher(algorithms.CAST5(self.key), modes.CBC(init_vector))
+        decryptor = cipher.decryptor()
 
