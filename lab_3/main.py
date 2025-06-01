@@ -17,12 +17,12 @@ def main():
     key_length = int(input("Введите длину ключа. Длина ключа должна быть от 40 до 128 бит с шагом 8 бит.\n"))
     encryption = SymmetricEncryption(key_length)
 
-    encrypted_data = encryption.encrypt(initial_text)
+    encrypted_data = encryption.encrypt(initial_text, encryption)
     print("Зашифрованные данные:\n", encrypted_data)
 
     write_file(encrypted_file, encrypted_data)
 
-    decrypted_data = encryption.decrypt(encrypted_data)
+    decrypted_data = encryption.decrypt(encrypted_data, encryption)
     print("Расшифрованные данные:\n", decrypted_data.decode('utf-8'))
 
     write_file(decrypted_file, decrypted_data)

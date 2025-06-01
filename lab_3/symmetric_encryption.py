@@ -14,9 +14,9 @@ class SymmetricEncryption:
 
 
     # зашифровка
-    def encrypt(self, inital_text):
+    def encrypt(self, inital_text, key):
         init_vector = os.urandom(8)
-        cipher = Cipher(algorithms.CAST5(self.key), modes.CBC(init_vector))
+        cipher = Cipher(algorithms.CAST5(key), modes.CBC(init_vector))
         encryptor = cipher.encryptor()
 
         pad_length = 8 - (len(inital_text) % 8)
@@ -27,11 +27,11 @@ class SymmetricEncryption:
 
 
     # дешифровка
-    def decrypt(self, init_vector_and_cipher_text):
+    def decrypt(self, init_vector_and_cipher_text, key):
         init_vector = init_vector_and_cipher_text[:8]
         cipher_text = init_vector_and_cipher_text[8:]
 
-        cipher = Cipher(algorithms.CAST5(self.key), modes.CBC(init_vector))
+        cipher = Cipher(algorithms.CAST5(key), modes.CBC(init_vector))
         decryptor = cipher.decryptor()
 
         padded_plain_text = decryptor.update(cipher_text) + decryptor.finalize()

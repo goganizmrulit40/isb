@@ -16,19 +16,25 @@ def generate_keys(sym_key_path, public_key_path, private_key_path):
 
 
 # шифрование данных гибридной системой
-def encrypt_data(initial_file_path, private_key_path, sym_key_path, decrypted_file_path):
-    settings = read_json('settings.json')
-    if not settings:
-        return
-
-    private_key = read_file(private_key_path)
-    encrypted_sym_key = read_file(sym_key_path)
+def encrypt_data(initial_file_path, private_key_path, sym_key_path, encrypted_file_path):
+    private_key = read_json(private_key_path)
+    encrypted_sym_key = read_json(sym_key_path)
 
     sym_key = AsymmetricEncryption.decrypt(encrypted_sym_key, private_key)
 
-    cipher_text = SymmetricEncryption.encrypt(initial_file_path)
+    cipher_text = SymmetricEncryption.encrypt(initial_file_path, sym_key)
 
-    write_file(decrypted_file_path, cipher_text)
+    write_file(encrypted_file_path, cipher_text)
 
 
+# дешифрование данных гибридной системой
+def decrypt_data(encrypted_file_path, private_key_path, sym_key_path, decrypted_file_path):
+    private_key = read_json(private_key_path)
+    encrypted_sym_key = read_json(sym_key_path)
+
+    sym_key = AsymmetricEncryption.decrypt(encrypted_sym_key, private_key)
+
+    decrypted_text = SymmetricEncryption.decrypt(encrypted_file_path, sym_key)
+
+    write_file(decrypted_file_path, decrypted_text)
 
