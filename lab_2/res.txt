@@ -1,8 +1,0 @@
-random_bits_cpp.txt: 0.11161176829829222
-random_bits_cpp.txt: 0.682840774837292
-random_bits_cpp.txt: 0.743539042150563
-
-random_bits_java.txt: 0.5958830905651779
-random_bits_java.txt: 0.36243035628254483
-random_bits_java.txt: 0.6627947179561491
-
