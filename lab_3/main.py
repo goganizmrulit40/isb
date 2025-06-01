@@ -14,7 +14,8 @@ def main():
     if initial_text is None:
         return
 
-    encryption = SymmetricEncryption(128)
+    key_length = int(input("Введите длину ключа. Длина ключа должна быть от 40 до 128 бит с шагом 8 бит.\n"))
+    encryption = SymmetricEncryption(key_length)
 
     encrypted_data = encryption.encrypt(initial_text)
     print("Зашифрованные данные:\n", encrypted_data)
@@ -24,9 +25,9 @@ def main():
     decrypted_data = encryption.decrypt(encrypted_data)
     print("Расшифрованные данные:\n", decrypted_data.decode('utf-8'))
 
-    write_file(decrypted_file, decrypted_data.decode('utf-8'))
+    write_file(decrypted_file, decrypted_data)
 
-    if initial_text == decrypted_data.decode('utf-8'):
+    if initial_text == decrypted_data:
         print("Шифрование и расшифровка прошли успешно")
     else:
         print("Ошибка: расшифрованные данные не совпадают с исходными")

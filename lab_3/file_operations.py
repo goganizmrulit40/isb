@@ -4,6 +4,7 @@ import json
 def read_json(file_path: str):
     try:
         with open(file_path) as json_file:
+            print(f"Файл {file_path} успешно прочитан.")
             return json.load(json_file)
     except FileNotFoundError:
         print(f"Файл {file_path} не найден.")
@@ -16,6 +17,7 @@ def read_json(file_path: str):
 def write_json(file_path: str, data: dict):
     try:
         with open(file_path, 'w') as fp:
+            print(f"В файл {file_path} успешно записана информация.")
             json.dump(data, fp)
     except IOError:
         print(f"Ошибка записи в файл {file_path}")
@@ -26,6 +28,7 @@ def write_json(file_path: str, data: dict):
 def read_file(file_path: str) -> bytes:
     try:
         with open(file_path, 'rb') as file:
+            print(f"Файл {file_path} успешно прочитан.")
             return file.read()
     except FileNotFoundError:
         print(f"Файл {file_path} не найден.")
@@ -38,6 +41,7 @@ def read_file(file_path: str) -> bytes:
 def write_file(file_path: str, data: bytes):
     try:
         with open(file_path, 'wb') as file:
+            print(f"В файл {file_path} успешно записана информация.")
             file.write(data)
     except IOError:
         print(f"Ошибка записи в файл {file_path}")
