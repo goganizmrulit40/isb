@@ -55,6 +55,17 @@ class AsymmetricEncryption:
         )
         return encrypted_sym_key
 
+    # расшифровываем симметричный ключ с использованием закрытого ключа
+    @staticmethod
+    def decrypt(encrypted_sym_key, private_key):
+        decrypted_sym_key = private_key.decrypt(
+            encrypted_sym_key,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+            )
+        )
+        return decrypted_sym_key
 
 
 
