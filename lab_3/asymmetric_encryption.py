@@ -1,5 +1,6 @@
 from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes
 from file_operations import read_json, write_file
 
 
@@ -41,3 +42,32 @@ class AsymmetricEncryption:
         )
 
         return private_key, public_key
+
+    # шифруем симметричный ключ с использованием открытого ключа
+    @staticmethod
+    def encrypt(sym_key, public_key):
+        encrypted_sym_key = public_key.encrypt(
+            sym_key,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+            )
+        )
+        return encrypted_sym_key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
