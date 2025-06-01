@@ -17,8 +17,13 @@ class SymmetricEncryption:
     def encrypt(self, inital_text):
         init_vector = os.urandom(8)
         cipher = Cipher(algorithms.CAST5(self.key), modes.CBC(init_vector))
-        inital_text = cipher.encryptor()
+        encryptor = cipher.encryptor()
 
+        pad_length = 8 - (len(inital_text) % 8)
+        padded_plaintext = inital_text + bytes([pad_length] * pad_length)
+
+        ciphertext = encryptor.update(padded_plaintext) + encryptor.finalize()
+        return init_vector + ciphertext
 
 
 
