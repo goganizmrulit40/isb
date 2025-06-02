@@ -2,7 +2,6 @@ import os
 
 import secrets
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.primitives import padding
 from file_operations import OperationsFiles
 
 
