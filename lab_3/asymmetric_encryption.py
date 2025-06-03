@@ -5,16 +5,27 @@ from file_operations import OperationsFiles
 
 
 class AsymmetricEncryption:
-    # читаем настройки из settings.json
+    """Class for asymmetric encryption using the RSA algorithm"""
+
     @staticmethod
     def load_settings(settings_path='settings.json'):
+        """
+        Loads settings from a json file.
+        :param settings_path: Path to the settings JSON file.
+        :return: Settings as a dictionary.
+        """
         settings = OperationsFiles.read_json(settings_path)
         return settings
 
 
-    # генерируем пару ключей RSA и сохраняем их в файлы
     @staticmethod
     def generate_keys(private_key_path, public_key_path):
+        """
+        Generates an RSA key pair and saves them to specified files.
+        :param private_key_path: File path to save the private key.
+        :param public_key_path: File path to save the public key.
+        :return: The generated private and public keys.
+        """
         private_key = rsa.generate_private_key(
             public_exponent=65537,
             key_size=2048,
@@ -46,9 +57,14 @@ class AsymmetricEncryption:
         return private_key, public_key
 
 
-    # шифруем симметричный ключ с использованием открытого ключа
     @staticmethod
     def encrypt(sym_key, public_key):
+        """
+        The symmetrical key is encrypted using an open key.
+        :param sym_key: The symmetric key used for encrypt.
+        :param public_key: The public key used for encryption.
+        :return: Encrypted symmetric key.
+        """
         encrypted_sym_key = public_key.encrypt(
             sym_key,
             padding.OAEP(
@@ -60,9 +76,14 @@ class AsymmetricEncryption:
         return encrypted_sym_key
 
 
-    # расшифровываем симметричный ключ с использованием закрытого ключа
     @staticmethod
     def decrypt(encrypted_sym_key, private_key):
+        """
+        Decrypts an encrypted symmetric key using the private key.
+        :param encrypted_sym_key: The encrypted symmetric key used for decrypt.
+        :param private_key: The private key used for decryption.
+        :return: Decrypted symmetric key.
+        """
         decrypted_sym_key = private_key.decrypt(
             encrypted_sym_key,
             padding.OAEP(
