@@ -1,5 +1,5 @@
 from file_operations import OperationsFiles
-from utils import generate_keys, encrypt_data, decrypt_data
+from hybrid_cryptosystem import HybridCryptosystem
 
 
 def main():
@@ -23,15 +23,15 @@ def main():
     key = int(input())
     while key != 0:
         if key == 1:
-            generate_keys(symmetric_key, public_key, private_key)
+            HybridCryptosystem.generate_keys(symmetric_key, public_key, private_key)
             key = int(input("Введите следующее желаемое действие: "))
             continue
         elif key == 2:
-            encrypt_data(initial_file, private_key, symmetric_key, encrypted_file)
+            HybridCryptosystem.encrypt_data(initial_file, private_key, symmetric_key, encrypted_file)
             key = int(input("Введите следующее желаемое действие: "))
             continue
         elif key == 3:
-            decrypt_data(encrypted_file, private_key, symmetric_key, decrypted_file)
+            HybridCryptosystem.decrypt_data(encrypted_file, private_key, symmetric_key, decrypted_file)
             key = int(input("Введите следующее желаемое действие: "))
             continue
         else:
