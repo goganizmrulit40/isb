@@ -5,7 +5,7 @@ from file_operations import OperationsFiles
 
 
 class AsymmetricEncryption:
-    """Class for asymmetric encryption using the RSA algorithm"""
+    """Class for asymmetric encryption using the RSA algorithm."""
 
     @staticmethod
     def load_settings(settings_path='settings.json'):
